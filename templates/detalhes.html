@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block titulo %}{{ planta.nome }}{% endblock %}
+{% block conteudo %}
+<p><a href="{{ url_for('plantas') }}">← Voltar ao catálogo</a></p>
+<section class="detalhe">
+  <div class="foto"><img src="{{ planta.imagem|img }}" alt="{{ planta.nome }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/' + planta.imagem) }}'"></div>
+  <div>
+    <h1>{{ planta.nome }}</h1>
+    <p class="preco">{{ planta.preco|brl }}</p>
+    <p>{{ planta.descricao }}</p>
+    <div class="info">
+      <div><b>Iluminação</b>☀ {{ planta.luz }}</div><div><b>Quantidade de água</b>💧 {{ planta.agua }}</div>
+      <div><b>Estoque</b>{{ planta.estoque }} unidade(s)</div>
+    </div>
+    <h3>Cuidados necessários</h3>
+    <p class="cuidados">{{ planta.cuidados }}</p>
+    {% if planta.disponivel() %}
+    <p><label>Quantidade <input type="number" id="qtd-detalhe" value="1" min="1" max="{{ planta.estoque }}" style="width:6rem"></label></p>
+    <button data-acao="adicionar" data-id="{{ planta.id }}">Adicionar ao carrinho</button>
+    {% else %}<button disabled>Esgotada</button>{% endif %}
+  </div>
+</section>
+{% endblock %}

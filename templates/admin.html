@@ -1,0 +1,46 @@
+{% extends "base.html" %}{% block titulo %}Admin{% endblock %}
+{% block conteudo %}
+<h1>Área administrativa</h1>
+<div class="abas">
+  <a class="{{ 'ativa' if aba == 'plantas' }}" href="{{ url_for('admin', aba='plantas') }}">Plantas</a>
+  <a class="{{ 'ativa' if aba == 'pedidos' }}" href="{{ url_for('admin', aba='pedidos') }}">Pedidos</a>
+  <a class="{{ 'ativa' if aba == 'mensagens' }}" href="{{ url_for('admin', aba='mensagens') }}">Mensagens</a>
+</div>
+
+{% if aba == 'plantas' %}
+<p><a class="botao" href="{{ url_for('planta_form') }}">Cadastrar nova planta</a></p>
+<div class="rolagem"><table>
+  <tr><th></th><th>Nome</th><th>Preço</th><th>Luz</th><th>Água</th><th>Estoque</th><th>Destaque</th><th>Ações</th></tr>
+  {% for p in plantas %}<tr>
+    <td><img src="{{ p.imagem|img }}" alt="" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/' + p.imagem) }}'"></td><td>{{ p.nome }}</td><td>{{ p.preco|brl }}</td><td>{{ p.luz }}</td><td>{{ p.agua }}</td>
+    <td>{{ p.estoque }}</td><td>{{ 'Sim' if p.destaque else '—' }}</td>
+    <td><a class="botao sec" href="{{ url_for('planta_form', id=p.id) }}">Editar</a>
+        <button class="perigo" data-acao="excluir" data-url="{{ url_for('api_excluir_planta', id=p.id) }}">Excluir</button></td>
+  </tr>{% endfor %}
+</table></div>
+
+{% elif aba == 'pedidos' %}
+{% for ped in pedidos %}
+<div class="bloco">
+  <header><h3>Pedido nº {{ ped.id }} · {{ ped.usuario.nome }}</h3><span>{{ ped.data }}</span></header>
+  <p>{{ ped.usuario.email }}</p>
+  <ul>{% for i in ped.itens %}<li>{{ i.quantidade }}× {{ i.nome }} — {{ i.subtotal|brl }}</li>{% endfor %}</ul>
+  <p><b>Total: {{ ped.total|brl }}</b></p>
+  <label>Status
+    <select class="status-pedido" data-id="{{ ped.id }}" style="width:auto">
+      {% for s in status_lista %}<option {{ 'selected' if s == ped.status }}>{{ s }}</option>{% endfor %}</select></label>
+  <button class="perigo" data-acao="excluir" data-url="{{ url_for('api_excluir_pedido', id=ped.id) }}">Excluir pedido</button>
+</div>
+{% else %}<p>Nenhum pedido ainda.</p>{% endfor %}
+
+{% else %}
+{% for m in mensagens %}
+<div class="bloco">
+  <header><h3>{{ m.nome }} <small>&lt;{{ m.email }}&gt;</small></h3><span>{{ m.data }}</span></header>
+  <p>{{ m.texto }}</p>
+  <a class="botao sec" href="{{ url_for('mensagem_form', id=m.id) }}">Editar</a>
+  <button class="perigo" data-acao="excluir" data-url="{{ url_for('api_excluir_mensagem', id=m.id) }}">Excluir</button>
+</div>
+{% else %}<p>Nenhuma mensagem recebida.</p>{% endfor %}
+{% endif %}
+{% endblock %}

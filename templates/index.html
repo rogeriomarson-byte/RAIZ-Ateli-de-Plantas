@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<section class="hero">
+  <div>
+    <span class="selo">Ateliê de plantas</span>
+    <h1>Plantas para dar vida à sua casa</h1>
+    <p>Na RAIZ você encontra plantas fáceis de cuidar, com explicações simples de luz, água e cuidados. Ideal para iniciantes e para apartamentos.</p>
+    <p><a class="botao" href="{{ url_for('plantas') }}">Ver catálogo</a> <a class="botao sec" href="{{ url_for('contato') }}">Fale conosco</a></p>
+  </div>
+  {% if destaques %}<div class="arte"><img src="{{ destaques[0].imagem|img }}" alt="{{ destaques[0].nome }}" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/' + destaques[0].imagem) }}'"></div>{% endif %}
+</section>
+
+<div class="destaque-tit"><h2>Plantas em destaque</h2><a class="botao sec" href="{{ url_for('plantas') }}">Ver todas as plantas</a></div>
+<div class="grade">{% for p in destaques %}{% include "_card.html" %}{% endfor %}</div>
+
+<h2>Por que escolher a RAIZ?</h2>
+<div class="beneficios">
+  <div><h3>Para iniciantes</h3><p>Cada planta tem os cuidados explicados passo a passo.</p></div>
+  <div><h3>Para apartamentos</h3><p>Opções para pouca luz e para espaços pequenos.</p></div>
+  <div><h3>Fácil de pedir</h3><p>Escolha as plantas, monte o carrinho e finalize o pedido.</p></div>
+</div>
+{% endblock %}

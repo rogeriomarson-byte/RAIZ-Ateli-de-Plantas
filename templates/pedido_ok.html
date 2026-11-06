@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block titulo %}Pedido realizado{% endblock %}
+{% block conteudo %}
+<h1>Obrigado pelo pedido, {{ pedido.usuario.nome }}! 🌿</h1>
+<p>Pedido nº <b>{{ pedido.id }}</b> · Status: <b>{{ pedido.status }}</b></p>
+<div class="rolagem"><table><tr><th>Planta</th><th>Qtd</th><th>Subtotal</th></tr>
+{% for i in pedido.itens %}<tr><td>{{ i.nome }}</td><td>{{ i.quantidade }}</td><td>{{ i.subtotal|brl }}</td></tr>{% endfor %}</table></div>
+<p class="total">Total: {{ pedido.total|brl }}</p>
+<a class="botao" href="{{ url_for('plantas') }}">Continuar comprando</a>
+{% endblock %}

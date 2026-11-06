@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="theme-color" content="#183f32">\n<meta name="description" content="RAIZ Ateliê de Plantas — plantas e dicas de cuidado para deixar sua casa mais viva.">
+<title>{% block titulo %}Início{% endblock %} · RAIZ Ateliê de Plantas</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topo">
+  <a class="logo" href="{{ url_for('index') }}" aria-label="RAIZ - página inicial">
+    <svg viewBox="0 0 40 40" width="38" height="38" aria-hidden="true">
+      <path d="M20 3c10 4 14 13 10 23-9 2-17-2-17-12 0-5 3-9 7-11z" fill="#7fb069"/>
+      <path d="M20 8v20M20 17l-5-4M20 22l5-5" stroke="#1e4a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M20 28v4M20 31l-5 5M20 31l5 5" stroke="#b9794a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span>RAIZ</span>
+  </a>
+  <nav aria-label="Menu principal">
+    <a href="{{ url_for('index') }}">Início</a>
+    <a href="{{ url_for('plantas') }}">Catálogo</a>
+    <a href="{{ url_for('contato') }}">Contato</a>
+    {% if eh_admin %}<a href="{{ url_for('admin') }}">Admin</a><a href="{{ url_for('logout') }}">Sair</a>
+    {% else %}<a href="{{ url_for('login') }}">Entrar</a>{% endif %}
+    <a class="carrinho" href="{{ url_for('carrinho') }}">Carrinho <span class="badge" id="badge" {% if carrinho_qtd == 0 %}hidden{% endif %}>{{ carrinho_qtd }}</span></a>
+  </nav>
+</header>
+<main>
+  {% for cat, msg in get_flashed_messages(with_categories=true) %}<p class="aviso {{ cat }}">{{ msg }}</p>{% endfor %}
+  {% block conteudo %}{% endblock %}
+</main>
+<footer>
+  <div class="cols">
+    <div><h3>RAIZ · Ateliê de Plantas</h3><p>Plantas escolhidas com carinho para quem<br>está começando e para quem mora em apartamento.</p></div>
+    <div><h3>Navegue</h3><p><a href="{{ url_for('plantas') }}">Catálogo</a><br><a href="{{ url_for('contato') }}">Fale conosco</a><br><a href="{{ url_for('carrinho') }}">Carrinho</a></p></div>
+    <div><h3>Projeto escolar</h3><p>Colégio UNASP-HT · 2º TI<br>Projeto Integrado DWS + POO + BD</p></div>
+  </div>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

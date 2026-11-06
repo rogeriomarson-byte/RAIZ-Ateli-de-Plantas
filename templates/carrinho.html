@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block titulo %}Carrinho{% endblock %}
+{% block conteudo %}
+<h1>Seu carrinho</h1>
+{% if itens %}
+<div class="rolagem"><table>
+  <tr><th></th><th>Planta</th><th>Preço</th><th>Quantidade</th><th>Subtotal</th><th></th></tr>
+  {% for i in itens %}<tr>
+    <td><img src="{{ i.imagem|img }}" alt="" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/' + i.imagem) }}'"></td><td>{{ i.nome }}</td><td>{{ i.preco_unitario|brl }}</td>
+    <td><input class="qtd-carrinho" type="number" min="0" value="{{ i.quantidade }}" data-id="{{ i.planta_id }}" aria-label="Quantidade de {{ i.nome }}"></td>
+    <td>{{ i.subtotal|brl }}</td><td><button class="perigo" data-acao="remover-item" data-id="{{ i.planta_id }}">Remover</button></td>
+  </tr>{% endfor %}
+</table></div>
+<p class="total">Total: {{ total|brl }}</p>
+<h2>Finalizar pedido</h2>
+<form class="formulario" id="form-pedido">
+  <label>Nome <input name="nome" required></label>
+  <label>E-mail <input type="email" name="email" required></label>
+  <button>Finalizar pedido</button>
+</form>
+{% else %}<p>Seu carrinho está vazio.</p><p><a class="botao" href="{{ url_for('plantas') }}">Ver catálogo</a></p>{% endif %}
+{% endblock %}

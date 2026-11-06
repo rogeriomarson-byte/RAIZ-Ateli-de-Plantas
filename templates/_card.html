@@ -1,0 +1,14 @@
+<article class="card">
+  <a href="{{ url_for('detalhes', id=p.id) }}"><img src="{{ p.imagem|img }}" alt="{{ p.nome }}" loading="lazy" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/' + p.imagem) }}'"></a>
+  <div class="corpo">
+    <h3>{{ p.nome }}</h3>
+    <span class="preco">{{ p.preco|brl }}</span>
+    <div class="selos"><span class="selo">☀ {{ p.luz }}</span><span class="selo">💧 Água: {{ p.agua|lower }}</span></div>
+    <p>{{ p.descricao }}</p>
+    <div class="acoes">
+      <a class="botao sec" href="{{ url_for('detalhes', id=p.id) }}">Detalhes</a>
+      {% if p.disponivel() %}<button data-acao="adicionar" data-id="{{ p.id }}">Adicionar</button>
+      {% else %}<button disabled>Esgotada</button>{% endif %}
+    </div>
+  </div>
+</article>

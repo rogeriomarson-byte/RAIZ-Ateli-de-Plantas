@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block titulo %}Editar mensagem{% endblock %}
+{% block conteudo %}
+<h1>Editar mensagem</h1>
+<form class="formulario" method="post">
+  <label>Nome <input name="nome" value="{{ m.nome }}" required></label>
+  <label>E-mail <input type="email" name="email" value="{{ m.email }}" required></label>
+  <label>Mensagem <textarea name="texto" rows="5" required>{{ m.texto }}</textarea></label>
+  <div><button>Salvar</button> <a class="botao sec" href="{{ url_for('admin', aba='mensagens') }}">Cancelar</a></div>
+</form>
+{% endblock %}

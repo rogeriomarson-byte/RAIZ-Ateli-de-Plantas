@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block titulo %}{{ 'Editar' if editando else 'Nova' }} planta{% endblock %}
+{% block conteudo %}
+<h1>{{ 'Editar' if editando else 'Cadastrar' }} planta</h1>
+<form class="formulario" method="post">
+  <label>Nome <input name="nome" value="{{ v.get('nome', '') }}" required></label>
+  <label>Descrição <textarea name="descricao" rows="3" required>{{ v.get('descricao', '') }}</textarea></label>
+  <label>Preço (R$) <input name="preco" value="{{ v.get('preco', '') }}" required placeholder="29,90"></label>
+  <label>Iluminação <select name="luz">{% for l in luzes %}<option {{ 'selected' if v.get('luz') == l }}>{{ l }}</option>{% endfor %}</select></label>
+  <label>Quantidade de água <select name="agua">{% for a in aguas %}<option {{ 'selected' if v.get('agua') == a }}>{{ a }}</option>{% endfor %}</select></label>
+  <label>Cuidados <textarea name="cuidados" rows="3" required>{{ v.get('cuidados', '') }}</textarea></label>
+  <label>Imagem <select name="imagem">{% for i in imagens %}<option {{ 'selected' if v.get('imagem') == i }}>{{ i }}</option>{% endfor %}</select></label>
+  <label>Estoque <input type="number" name="estoque" min="0" value="{{ v.get('estoque', 0) }}" required></label>
+  <label class="linha"><input type="checkbox" name="destaque" {{ 'checked' if v.get('destaque') }}> Mostrar em destaque na página inicial</label>
+  <div><button>Salvar</button> <a class="botao sec" href="{{ url_for('admin', aba='plantas') }}">Cancelar</a></div>
+</form>
+{% endblock %}

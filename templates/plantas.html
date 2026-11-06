@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block titulo %}Catálogo{% endblock %}
+{% block conteudo %}
+<h1>Catálogo de plantas</h1>
+<form class="filtros" method="get">
+  <input name="q" value="{{ busca }}" placeholder="Buscar planta pelo nome" aria-label="Buscar">
+  <select name="luz" aria-label="Luz"><option value="">Qualquer luz</option>
+    {% for l in luzes %}<option {{ 'selected' if l == luz }}>{{ l }}</option>{% endfor %}</select>
+  <button>Filtrar</button> <a class="botao sec" href="{{ url_for('plantas') }}">Limpar</a>
+</form>
+{% if plantas %}<div class="grade">{% for p in plantas %}{% include "_card.html" %}{% endfor %}</div>
+{% else %}<p>Nenhuma planta encontrada. <a href="{{ url_for('plantas') }}">Ver todas</a></p>{% endif %}
+{% endblock %}

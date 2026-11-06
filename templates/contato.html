@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block titulo %}Contato{% endblock %}
+{% block conteudo %}
+<h1>Fale com a RAIZ</h1>
+<p>Dúvidas sobre cuidados, entrega ou pedidos? Envie sua mensagem.</p>
+<form class="formulario" id="form-contato">
+  <label>Nome <input name="nome" required></label>
+  <label>E-mail <input type="email" name="email" required></label>
+  <label>Mensagem <textarea name="texto" rows="5" required></textarea></label>
+  <button>Enviar mensagem</button>
+</form>
+{% endblock %}
